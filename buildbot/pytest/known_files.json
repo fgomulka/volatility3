@@ -1,0 +1,81 @@
+{
+    "windows_dumpfiles": {
+      "win10-x64-1607-14393.lime": {
+        "0xe08ff2c49660": "dcecb7021ee88686af207b49807c12e9",
+        "0xe08ff4a9c080": [
+          "cd08fe570350dad3de9654d6f143ce82",
+          "64c7df94b4bb3387cbc8f37f78b4ab3e",
+          "25e26482950c4e085cf9185ce701eb2b"
+        ],
+        "0xe08ff3f2f4d0": "502fcf236da82b0a0d98aeafbb55ffad",
+        "0xe08ff2984320": [
+          "75d8ab8466e6aa3729ca25212dac508e",
+          "780dc8f0f4f5ce45023f80fee866f293"
+        ]
+      },
+      "win2012r2-x64-6.3.9600.18505.lime": {
+        "0xe001cefc98d0": [
+          "abb7da8439286381dfdf4a62f5b369b3",
+          "4d3675cb6c85748d9a13dd5e34e4398b"
+        ],
+        "0xe001d0717b60": [
+          "dd4f64272fe16c0fd915f8b3b0a663bc",
+          "5dc22d26642b9f22fbdb83dc32150888",
+          "bad8b49eb4a10b3ea89cc3d5655b97c1"
+        ],
+        "0xe001d02f7800": [
+          "b4035768ce1521ea18d24d0f2fe8e26b",
+          "5b40063a96d0f199af1ac48467750350"
+        ]
+      },
+      "win-xp-laptop-2005-06-25.img": {
+        "0x82220e78": [
+          "9bdd5532286f1660f3778e68bc36efe6",
+          "e3bc1e9e7370e3b5a661ebe591ecf4ec"
+        ],
+        "0x82350bf8": [
+          "e5c5e8d97b6280745b41f6572c85d1f0",
+          "8589f1463422884dbf1411aaad278465"
+        ],
+        "0x81eaf418": [
+          "f7a1ae2060a58f8470b97affdb46dccf",
+          "54fd611021fa784912530b8007545986"
+        ],
+        "0x820588e8": "458efbc8fdb859488a6ab2b200cce809"
+      },
+      "win-xp-laptop-2005-07-04-1430.img": {
+        "0x821f30e0": [
+          "52b3c305a44c81c68529a9122e0a9282",
+          "b865f627919d595d74e438e7b283ceb3"
+        ],
+        "0x821a28e0": [
+          "d4852b2530982ba78a81760ae71908da",
+          "ef7ce6fde619de44cfe499e673c00056"
+        ],
+        "0x821decc0": [
+          "123190584f399738e14ca6aea57d3d4a",
+          "a4188c071346f0f1164d5fe30c0f543d"
+        ],
+        "0x8202cdd8": [
+          "cee30ca434cf12d92ceb84077fb058fb",
+          "aa253a9e97067cce97473c2b9acf9c95"
+        ]
+      },
+      "win10-x86-2016-07-08.lime": {
+        "0x8a3697b0": [
+          "46d2fa009bd397f039f0611dd83586a1",
+          "3a17216136695d812d2fe88c15e97149"
+        ],
+        "0x8b2d9df0": [
+          "1362f27f0870f8d2782d9d63ef2da01b",
+          "a47fdc3eb5cf3230d005c0290e76338f"
+        ],
+        "0x9cada180": "404cb42e25976c6ca6e88b2b2aba9f4c",
+        "0xaf092bc8": [
+          "fc957f8891966e1a84562827a0960ed6",
+          "b2572b5ba23aa8cdd3cf0078d2a2c17c"
+        ]
+      }
+    }
+
+  }

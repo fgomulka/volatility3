@@ -33,10 +33,3 @@ jobs:
       run: |
     	ls -la .
     	ls -la ${{ github.workspace }}
-
-    - name: clone tests
-      run: git clone git@github.com:volatilityfoundation/buildbot.git
-
-    - name: ls -la
-      run:
-      	ls -la .
