@@ -33,3 +33,7 @@ jobs:
       run: |
         ls -la .
         ls -la ${{ github.workspace }}
+
+    - name: sample test
+      run: |
+        py.test test_volatility.py --volatility=vol.py  -k test
