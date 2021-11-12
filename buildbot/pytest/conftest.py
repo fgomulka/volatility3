@@ -1,6 +1,7 @@
 # This file is used to augment the test configuration
 
 import os
+import pytest
 
 def pytest_addoption(parser):
     parser.addoption("--volatility", action="store", default=None,
@@ -28,3 +29,12 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize("image",
             images,
             ids=[os.path.basename(image) for image in images])
+
+# Fixtures
+@pytest.fixture
+def volatility(request):
+    return request.config.getoption("--volatility")
+
+@pytest.fixture
+def python(request):
+	return request.config.getoption("--python")
