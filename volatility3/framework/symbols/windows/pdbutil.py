@@ -68,7 +68,7 @@ class PDBUtility(interfaces.configuration.VersionableInterface):
                                   symbol_table_class: str,
                                   config_path: str = 'pdbutility',
                                   progress_callback: constants.ProgressCallback = None):
-        """Loads (downlading if necessary) a windows symbol table"""
+        """Loads (downloading if necessary) a windows symbol table"""
 
         filter_string = os.path.join(pdb_name.strip('\x00'), guid.upper() + "-" + str(age))
 
@@ -346,8 +346,9 @@ class PdbSignatureScanner(interfaces.layers.ScannerInterface):
         self._pdb_names = pdb_names
 
     def __call__(self, data: bytes, data_offset: int) -> Generator[Tuple[str, Any, bytes, int], None, None]:
-        pattern = b'RSDS' + (b'.' * self._RSDS_format.size) + b'(' + b'|'.join(self._pdb_names) + b')\x00'
-        for match in re.finditer(pattern, data):
+        pattern = b'RSDS' + (b'.' * self._RSDS_format.size) + b'(' + b'|'.join(
+            [re.escape(x) for x in self._pdb_names]) + b')\x00'
+        for match in re.finditer(pattern, data, flags = re.DOTALL):
             pdb_name = data[match.start(0) + 4 + self._RSDS_format.size:match.start(0) + len(match.group()) - 1]
             if pdb_name in self._pdb_names:
                 ## this ordering is intentional due to mixed endianness in the GUID
