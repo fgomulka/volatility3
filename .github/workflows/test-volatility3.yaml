@@ -68,3 +68,10 @@ jobs:
     - name: sample test
       run: |
         py.test buildbot/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime.gz -k win
+
+    - name: Clean up post-test
+      run: |
+        rm -rf *.gz
+        cd volatility3/symbols
+        rm -rf windows mac linux
+        rm -rf windows.zip mac.zip linux.zip
