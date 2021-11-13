@@ -40,7 +40,7 @@ def runvol(args, volatility, python):
 def runvol_plugin(plugin, img, volatility, python, pluginargs=[], globalargs=[]):
     args = globalargs + [
         "--single-location",
-        "file:///" + img,
+        img,
         "-q",
         plugin,
     ] + pluginargs
