@@ -135,6 +135,9 @@ class Intel(linear.LinearlyMappedLayer):
                                                               "Page Fault at entry " + hex(entry) + " in table " + name)
             # Check if we're a large page
             if large_page and (entry & (1 << 7)):
+                # Mask off the PAT bit
+                if entry & (1 << 12):
+                    entry -= (1 << 12)
                 # We're a large page, the rest is finished below
                 # If we want to implement PSE-36, it would need to be done here
                 break
@@ -361,7 +364,7 @@ class WindowsIntelPAE(WindowsMixin, IntelPAE):
 
 class WindowsIntel32e(WindowsMixin, Intel32e):
     # TODO: Fix appropriately in a future release.
-    # Currently just a temprorary workaround to deal with custom bit flag
+    # Currently just a temporary workaround to deal with custom bit flag
     # in the PFN field for pages in transition state.
     # See https://github.com/volatilityfoundation/volatility3/pull/475
     _maxphyaddr = 45

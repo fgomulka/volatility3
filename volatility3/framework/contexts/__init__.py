@@ -6,7 +6,7 @@ framework functions.
 
 This has been made an object to allow quick swapping and changing of
 contexts, to allow a plugin to act on multiple different contexts
-without them interfering eith each other.
+without them interfering with each other.
 """
 import functools
 import hashlib
@@ -144,17 +144,17 @@ class Context(interfaces.context.ContextInterface):
             size: The size, in bytes, that the module occupys from offset location within the layer named layer_name
         """
         if size:
-            return SizedModule(self,
-                               module_name = module_name,
-                               layer_name = layer_name,
-                               offset = offset,
-                               size = size,
-                               native_layer_name = native_layer_name)
-        return Module(self,
-                      module_name = module_name,
-                      layer_name = layer_name,
-                      offset = offset,
-                      native_layer_name = native_layer_name)
+            return SizedModule.create(self,
+                                      module_name = module_name,
+                                      layer_name = layer_name,
+                                      offset = offset,
+                                      size = size,
+                                      native_layer_name = native_layer_name)
+        return Module.create(self,
+                             module_name = module_name,
+                             layer_name = layer_name,
+                             offset = offset,
+                             native_layer_name = native_layer_name)
 
 
 def get_module_wrapper(method: str) -> Callable:
@@ -178,6 +178,34 @@ def get_module_wrapper(method: str) -> Callable:
 
 
 class Module(interfaces.context.ModuleInterface):
+
+    @classmethod
+    def create(cls,
+               context: interfaces.context.ContextInterface,
+               module_name: str,
+               layer_name: str,
+               offset: int,
+               **kwargs) -> 'Module':
+        pathjoin = interfaces.configuration.path_join
+        # Check if config_path is None
+        free_module_name = context.modules.free_module_name(module_name)
+        config_path = kwargs.get('config_path', None)
+        if config_path is None:
+            config_path = pathjoin('temporary', 'modules', free_module_name)
+        # Populate the configuration
+        context.config[pathjoin(config_path, 'layer_name')] = layer_name
+        context.config[pathjoin(config_path, 'offset')] = offset
+        # This is important, since the module_name may be changed in case it is already in use
+        if 'symbol_table_name' not in kwargs:
+            kwargs['symbol_table_name'] = module_name
+        for arg in kwargs:
+            context.config[pathjoin(config_path, arg)] = kwargs.get(arg, None)
+        # Construct the object
+        return_val = cls(context, config_path, free_module_name)
+        context.add_module(return_val)
+        context.config[config_path] = return_val.name
+        # Add the module to the context modules collection
+        return return_val
 
     def object(self,
                object_type: str,
@@ -280,26 +308,11 @@ class Module(interfaces.context.ModuleInterface):
 
 class SizedModule(Module):
 
-    def __init__(self,
-                 context: interfaces.context.ContextInterface,
-                 module_name: str,
-                 layer_name: str,
-                 offset: int,
-                 size: int,
-                 symbol_table_name: Optional[str] = None,
-                 native_layer_name: Optional[str] = None) -> None:
-        super().__init__(context,
-                         module_name = module_name,
-                         layer_name = layer_name,
-                         offset = offset,
-                         native_layer_name = native_layer_name,
-                         symbol_table_name = symbol_table_name)
-        self._size = size
-
     @property
     def size(self) -> int:
         """Returns the size of the module (0 for unknown size)"""
-        return self._size
+        size = self.config.get('size', 0)
+        return size or 0
 
     @property  # type: ignore # FIXME: mypy #5107
     @functools.lru_cache()
@@ -346,6 +359,13 @@ class ModuleCollection(interfaces.context.ModuleContainer):
                 seen.add(mod.hash)  # type: ignore # FIXME: mypy #5107
         return ModuleCollection(new_modules)
 
+    def free_module_name(self, prefix: str = "module") -> str:
+        """Returns an unused module name"""
+        count = 1
+        while prefix + str(count) in self:
+            count += 1
+        return prefix + str(count)
+
     @property
     def modules(self) -> 'ModuleCollection':
         """A name indexed dictionary of modules using that name in this
@@ -360,7 +380,8 @@ class ModuleCollection(interfaces.context.ModuleContainer):
         provided."""
         if size < 0:
             raise ValueError("Size must be strictly non-negative")
-        for module in self._modules:
+        for module_name in self._modules:
+            module = self._modules[module_name]
             if isinstance(module, SizedModule):
                 if (offset <= module.offset + module.size) and (offset + size >= module.offset):
                     yield (module.name, module.get_symbols_by_absolute_location(offset, size))

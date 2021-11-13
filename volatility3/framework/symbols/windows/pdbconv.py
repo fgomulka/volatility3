@@ -18,7 +18,7 @@ from volatility3.framework.layers import physical, msf, resources
 
 vollog = logging.getLogger(__name__)
 
-primatives = {
+primitives = {
     0x03: ("void", {
         "endian": "little",
         "kind": "void",
@@ -584,7 +584,7 @@ class PdbReader:
     def get_type_from_index(self, index: int) -> Union[List[Any], Dict[str, Any]]:
         """Takes a type index and returns appropriate dictionary."""
         if index < 0x1000:
-            base_name, base = primatives[index & 0xff]
+            base_name, base = primitives[index & 0xff]
             self.bases[base_name] = base
             result: Union[List[Dict[str, Any]], Dict[str, Any]] = {"kind": "base", "name": base_name}
             indirection = (index & 0xf00)
@@ -644,7 +644,7 @@ class PdbReader:
             if (index & 0xf00):
                 _, base = indirections[index & 0xf00]
             else:
-                _, base = primatives[index & 0xff]
+                _, base = primitives[index & 0xff]
             result = base['size']
         else:
             leaf_type, name, value = self.types[index - 0x1000]
@@ -988,6 +988,8 @@ if __name__ == '__main__':
     filename = None
     if args.guid is not None and args.pattern is not None:
         filename = PdbRetreiver().retreive_pdb(guid = args.guid, file_name = args.pattern, progress_callback = pg_cb)
+        if filename is None:
+            parser.error("PDB file could not be retrieved from the internet")
         if parse.urlparse(filename, 'file').scheme == 'file':
             delfile = True
     elif args.file:

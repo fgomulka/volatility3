@@ -58,9 +58,9 @@ class ABCKmsg(ABC):
         self._context = context
         self._config = config
         vmlinux = context.modules[self._config['kernel']]
-        self.layer_name = kernel.layer_name  # type: ignore
+        self.layer_name = vmlinux.layer_name  # type: ignore
         symbol_table_name = vmlinux.symbol_table_name  # type: ignore
-        self.vmlinux = contexts.Module(context, symbol_table_name, self.layer_name, 0)  # type: ignore
+        self.vmlinux = contexts.Module.create(context, symbol_table_name, self.layer_name, 0)  # type: ignore
         self.long_unsigned_int_size = self.vmlinux.get_type('long unsigned int').size
 
     @classmethod
@@ -108,7 +108,7 @@ class ABCKmsg(ABC):
     def symtab_checks(cls, vmlinux: interfaces.context.ModuleInterface) -> bool:
         """This method on each sublasss will be called to evaluate if the kernel
         being analyzed fulfill the type & symbols requirements for the implementation.
-        The first class returning True will be instanciated and called via the
+        The first class returning True will be instantiated and called via the
         run() method.
 
         :return: True is the kernel being analysed fulfill the class requirements.
@@ -173,7 +173,7 @@ class KmsgLegacy(ABCKmsg):
     """Linux kernels prior to v5.10, the ringbuffer is initially kept in
     __log_buf, and log_buf is a pointer to the former. __log_buf is declared as
     a char array but it actually contains an array of printk_log structs.
-    The lenght of this array is defined in the kernel KConfig configuration via
+    The length of this array is defined in the kernel KConfig configuration via
     the CONFIG_LOG_BUF_SHIFT value as a power of 2.
     This can also be modified by the log_buf_len kernel boot parameter.
     In SMP systems with more than 64 CPUs this ringbuffer size is dynamically
@@ -363,7 +363,7 @@ class KmsgFiveTen(ABCKmsg):
 class Kmsg(plugins.PluginInterface):
     """Kernel log buffer reader"""
 
-    _required_framework_version = (1, 0, 0)
+    _required_framework_version = (2, 0, 0)
 
     _version = (1, 0, 0)
 

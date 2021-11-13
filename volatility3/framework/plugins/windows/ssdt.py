@@ -18,14 +18,14 @@ from volatility3.plugins.windows import modules
 class SSDT(plugins.PluginInterface):
     """Lists the system call table."""
 
-    _required_framework_version = (1, 2, 0)
+    _required_framework_version = (2, 0, 0)
     _version = (1, 0, 0)
 
     @classmethod
     def get_requirements(cls) -> List[interfaces.configuration.RequirementInterface]:
         return [
             requirements.ModuleRequirement(name = 'kernel', description = 'Windows kernel',
-                                           architectures = ["Intel32", "Intel64"]),
+                                                     architectures = ["Intel32", "Intel64"]),
             requirements.PluginRequirement(name = 'modules', plugin = modules.Modules, version = (1, 0, 0)),
         ]
 
@@ -60,12 +60,12 @@ class SSDT(plugins.PluginInterface):
             if module_name in constants.windows.KERNEL_MODULE_NAMES:
                 symbol_table_name = symbol_table
 
-            context_module = contexts.SizedModule(context,
-                                                  module_name,
-                                                  layer_name,
-                                                  mod.DllBase,
-                                                  mod.SizeOfImage,
-                                                  symbol_table_name = symbol_table_name)
+            context_module = contexts.SizedModule.create(context = context,
+                                                         module_name = module_name,
+                                                         layer_name = layer_name,
+                                                         offset = mod.DllBase,
+                                                         size = mod.SizeOfImage,
+                                                         symbol_table_name = symbol_table_name)
 
             context_modules.append(context_module)
 
