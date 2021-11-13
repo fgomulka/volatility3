@@ -62,12 +62,11 @@ jobs:
 
     - name: ls -la!
       run: |
-        ls -la .
         ls -la ${{ github.workspace }}
 
     - name: sample test
       run: |
-        py.test buildbot/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime.gz -k win
+        py.test test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime.gz -k win
 
     - name: Clean up post-test
       run: |
@@ -75,3 +74,9 @@ jobs:
         cd volatility3/symbols
         rm -rf windows mac linux
         rm -rf windows.zip mac.zip linux.zip
+        cd -
+    
+    - name: ls
+      run: |
+        ls -la .
+        ls -la volatility3/symbols
