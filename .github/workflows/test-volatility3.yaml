@@ -33,23 +33,33 @@ jobs:
     - name: Download images
       run: |
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/2.6.32-5-amd64-dbg_2.6.32-48squeeze6_amd64.lime.gz"
+        gunzip 2.6.32-5-amd64-dbg_2.6.32-48squeeze6_amd64.lime.gz 
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/linux-sample-1.bin.gz"
+        gunzip linux-sample-1.bin.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/linux-sample-2.bin.gz"
+        gunzip linux-sample-2.bin.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/linux-sample-3.bin.gz"
+        gunzip linux-sample-3.bin.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/linux-sample-4.bin.gz"
+        gunzip linux-sample-4.bin.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/linux-sample-5.bin.gz"
+        gunzip linux-sample-5.bin.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/linux-sample-6.bin.gz"
+        gunzip linux-sample-6.bin.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/macos-10-13-3-17D47.lime.gz"
+        gunzip macos-10-13-3-17D47.lime.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/surge-output-debian9.0-4.9.0-3-amd64-x86_64.lime.gz"
+        gunzip surge-output-debian9.0-4.9.0-3-amd64-x86_64.lime.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/win10-x64-1607-14393.lime.gz"
+        gunzip win10-x64-1607-14393.lime.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/win10-x86-2016-07-08.lime.gz"
+        gunzip win10-x86-2016-07-08.lime.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/win2012r2-x64-6.3.9600.18505.lime.gz"
+        gunzip win2012r2-x64-6.3.9600.18505.lime.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/win-xp-laptop-2005-06-25.img.gz"
+        gunzip win-xp-laptop-2005-06-25.img.gz
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/win-xp-laptop-2005-07-04-1430.img.gz"
-
-    - name: gunzip
-      run: |
-        gunzip "*.gz"
+        gunzip win-xp-laptop-2005-07-04-1430.img.gz
 
     - name: Download and Extract symbols
       run: |
