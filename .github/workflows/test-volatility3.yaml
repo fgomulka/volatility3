@@ -80,12 +80,13 @@ jobs:
 
     - name: sample test
       run: |
-        python3 vol.py --single-location win10-x64-1607-14393.lime.gz windows.pslist.PsList
+        python3 vol.py --single-location win10-x64-1607-14393.lime windows.pslist.PsList
         # py.test test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k win
 
     - name: Clean up post-test
       run: |
-        rm -rf *.gz
+        rm -rf *.lime
+        rm -rf *.img
         cd volatility3/symbols
         rm -rf windows mac linux
         rm -rf windows.zip mac.zip linux.zip
