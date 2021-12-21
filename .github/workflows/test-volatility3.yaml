@@ -80,7 +80,8 @@ jobs:
 
     - name: sample test
       run: |
-        py.test test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k win
+        python3 vol.py --single-location win10-x64-1607-14393.lime.gz windows.pslist.PsList
+        # py.test test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k win
 
     - name: Clean up post-test
       run: |
