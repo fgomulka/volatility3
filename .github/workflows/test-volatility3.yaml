@@ -79,14 +79,9 @@ jobs:
       run: |
         ls -la ${{ github.workspace }}
 
-    - name: python --version
-      run: |
-        python3 --version
-
     - name: sample test
       run: |
-        python3 vol.py --single-location win10-x64-1607-14393.lime windows.pslist.PsList
-        # py.test test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k win
+        py.test test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k win
 
     - name: Clean up post-test
       run: |
