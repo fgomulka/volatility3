@@ -79,6 +79,10 @@ jobs:
       run: |
         ls -la ${{ github.workspace }}
 
+    - name: python --version
+      run: |
+        python3 --version
+
     - name: sample test
       run: |
         python3 vol.py --single-location win10-x64-1607-14393.lime windows.pslist.PsList
