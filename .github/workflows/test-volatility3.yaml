@@ -82,6 +82,10 @@ jobs:
     - name: sample test
       run: |
         py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k windows
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win10-x86-2016-07-08.lime.gz -k windows
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win2012r2-x64-6.3.9600.18505.lime.gz -k windows
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win-xp-laptop-2005-06-25.img.gz -k windows
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win-xp-laptop-2005-07-04-1430.img.gz -k windows
 
     - name: Clean up post-test
       run: |
