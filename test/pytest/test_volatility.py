@@ -108,7 +108,7 @@ def test_windows_hivelist(image, volatility, python):
 
 def test_windows_dumpfiles(image, volatility, python):
 
-    json_file = open('known_files.json')
+    json_file = open('./test/pytest/known_files.json')
 
     known_files = json.load(json_file)
 
