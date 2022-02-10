@@ -81,18 +81,18 @@ jobs:
 
     - name: sample test
       run: |
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k windows
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win10-x86-2016-07-08.lime -k windows
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win2012r2-x64-6.3.9600.18505.lime -k windows
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win-xp-laptop-2005-06-25.img -k windows
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win-xp-laptop-2005-07-04-1430.img -k windows
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-1.bin -k linux
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-2.bin -k linux
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-3.bin -k linux
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-4.bin -k linux
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-5.bin -k linux
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-6.bin -k linux
-        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image macos-10-13-3-17D47.lime -k mac
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k test_windows
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win10-x86-2016-07-08.lime -k test_windows
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win2012r2-x64-6.3.9600.18505.lime -k test_windows
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win-xp-laptop-2005-06-25.img -k test_windows
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win-xp-laptop-2005-07-04-1430.img -k test_windows
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-1.bin -k test_linux
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-2.bin -k test_linux
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-3.bin -k test_linux
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-4.bin -k test_linux
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-5.bin -k test_linux
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-6.bin -k test_linux
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image macos-10-13-3-17D47.lime -k test_mac
 
     - name: Clean up post-test
       run: |
