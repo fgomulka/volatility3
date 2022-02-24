@@ -103,7 +103,7 @@ jobs:
         rm -rf windows.zip mac.zip linux.zip
         cd -
     
-    - name: ls
+    - name: dir
       run: |
-        ls -la .
-        ls -la volatility3/symbols
+        dir .
+        dir volatility3/symbols
