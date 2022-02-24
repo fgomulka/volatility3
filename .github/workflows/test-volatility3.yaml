@@ -75,9 +75,9 @@ jobs:
         mv *.json.xz mac
         cd -
 
-    - name: ls -la!
+    - name: dir
       run: |
-        ls -la ${{ github.workspace }}
+        dir ${{ github.workspace }}
 
     - name: sample test
       run: |
