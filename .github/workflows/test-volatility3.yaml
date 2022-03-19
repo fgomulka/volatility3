@@ -24,13 +24,6 @@ jobs:
         python setup.py sdist --formats=gztar,zip
         python setup.py bdist_wheel
 
-    - name: Archive dist
-      uses: actions/upload-artifact@v2
-      with:
-        name: volatility3-pypi
-        path: |
-          dist/
-    
     - name: Download images
       run: |
         curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/2.6.32-5-amd64-dbg_2.6.32-48squeeze6_amd64.lime.gz"
