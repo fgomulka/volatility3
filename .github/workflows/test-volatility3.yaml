@@ -1,5 +1,5 @@
 name: Test Volatility3
-on: [push]
+on: [pull-request]
 jobs:
 
   build:

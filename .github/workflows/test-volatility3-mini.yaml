@@ -1,0 +1,71 @@
+name: Test Volatility3
+on: [push]
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel
+        pip install -U pytest
+        pip install -r requirements.txt
+
+    - name: Build PyPi packages
+      run: |
+        python setup.py sdist --formats=gztar,zip
+        python setup.py bdist_wheel
+
+    - name: Download images
+      run: |
+        curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/linux-sample-1.bin.gz"
+        gunzip linux-sample-1.bin.gz
+        curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/macos-10-13-3-17D47.lime.gz"
+        gunzip macos-10-13-3-17D47.lime.gz
+        curl -sLO "https://downloads.volatilityfoundation.org/volatility3/images/win10-x64-1607-14393.lime.gz"
+        gunzip win10-x64-1607-14393.lime.gz
+
+    - name: Download and Extract symbols
+      run: |
+        cd ./volatility3/symbols
+        curl -sLO https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip
+        curl -sLO https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip
+        curl -sLO https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip
+        unzip windows.zip
+        unzip linux.zip
+        unzip mac.zip
+        mkdir mac
+        mv *.json.xz mac
+        cd -
+
+    - name: ls -la!
+      run: |
+        ls -la ${{ github.workspace }}
+
+    - name: sample test
+      run: |
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k test_windows -v
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image linux-sample-1.bin -k test_linux -v
+        py.test ./test/pytest/test_volatility.py --volatility=vol.py --image macos-10-13-3-17D47.lime -k test_mac -v
+
+    - name: Clean up post-test
+      run: |
+        rm -rf *.lime
+        rm -rf *.img
+        cd volatility3/symbols
+        rm -rf windows mac linux
+        rm -rf windows.zip mac.zip linux.zip
+        cd -
+    
+    - name: ls
+      run: |
+        ls -la .
+        ls -la volatility3/symbols
