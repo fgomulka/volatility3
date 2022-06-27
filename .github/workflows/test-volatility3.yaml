@@ -68,11 +68,7 @@ jobs:
         mv *.json.xz mac
         cd -
 
-    - name: ls -la!
-      run: |
-        ls -la ${{ github.workspace }}
-
-    - name: sample test
+    - name: Testing...
       run: |
         py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win10-x64-1607-14393.lime -k test_windows -v
         py.test ./test/pytest/test_volatility.py --volatility=vol.py --image win10-x86-2016-07-08.lime -k test_windows -v
@@ -95,8 +91,3 @@ jobs:
         rm -rf windows mac linux
         rm -rf windows.zip mac.zip linux.zip
         cd -
-    
-    - name: ls
-      run: |
-        ls -la .
-        ls -la volatility3/symbols
